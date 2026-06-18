@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nilara Hills Resort</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C9922A;
+      --gold-light: #E8B84B;
+      --gold-pale: #F5D98B;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --forest: #1C2416;
+      --forest2: #243020;
+      --white: #F9F5EE;
+      --muted: #9A9080;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+      backdrop-filter: blur(0px);
+      transition: background 0.4s, padding 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(12px);
+      padding: 14px 60px;
+      border-bottom: 1px solid rgba(201,146,42,0.2);
+    }
+    .nav-logo img {
+      height: 52px;
+      filter: drop-shadow(0 0 10px rgba(201,146,42,0.4));
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--white);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 400;
+      opacity: 0.85;
+      transition: color 0.3s, opacity 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); opacity: 1; }
+    .nav-cta {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      padding: 10px 24px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--gold-light); }
+
+    /* ─── HERO ─── */
+    #home {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(10,10,10,0.6) 60%, var(--black) 100%),
+        url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1800&q=80') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 18s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 110px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 1s 0.7s forwards;
+    }
+    .hero-title span {
+      display: block;
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards;
+    }
+    .hero-actions {
+      margin-top: 48px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s 1.3s forwards;
+    }
+    .btn-gold {
+      padding: 14px 40px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      text-decoration: none;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,146,42,0.4);
+    }
+    .btn-outline {
+      padding: 14px 40px;
+      border: 1px solid rgba(201,146,42,0.5);
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold-light);
+      background: rgba(201,146,42,0.08);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s 1.8s forwards;
+    }
+    .hero-scroll span { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 100px 60px; }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .gold-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 24px 0;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery { background: var(--dark); }
+    .gallery-header { text-align: center; margin-bottom: 60px; }
+    .gallery-header .gold-divider { margin: 24px auto; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 12px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .g-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .g-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .g-item:hover::after { opacity: 1; }
+    .g-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .g-item:hover img { transform: scale(1.06); }
+    .g1 { grid-column: 1 / 6; grid-row: 1; }
+    .g2 { grid-column: 6 / 9; grid-row: 1; }
+    .g3 { grid-column: 9 / 13; grid-row: 1; }
+    .g4 { grid-column: 1 / 5; grid-row: 2; }
+    .g5 { grid-column: 5 / 9; grid-row: 2; }
+    .g6 { grid-column: 9 / 13; grid-row: 2; }
+
+    /* ─── ROOMS ─── */
+    #rooms { background: var(--black); }
+    .rooms-intro { max-width: 560px; margin-bottom: 64px; }
+    .rooms-intro p { color: var(--muted); line-height: 1.9; font-size: 13px; margin-top: 16px; }
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2px;
+      max-width: 1300px;
+    }
+    .room-card {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .room-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+      filter: brightness(0.75);
+    }
+    .room-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(0.55);
+    }
+    .room-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.1) 55%, transparent 100%);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .room-tag {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .room-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .room-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 10px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s;
+      opacity: 0;
+    }
+    .room-card:hover .room-desc { max-height: 80px; opacity: 1; }
+    .room-price {
+      margin-top: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .room-price span:first-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      color: var(--gold-light);
+    }
+    .room-price span:last-child {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .room-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
+    }
+    .room-card:hover .room-btn { opacity: 1; transform: translateY(0); }
+
+    /* ─── DINING ─── */
+    #dining {
+      background: var(--forest);
+      position: relative;
+      overflow: hidden;
+    }
+    #dining::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,146,42,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dining-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .dining-img-wrap {
+      position: relative;
+    }
+    .dining-img-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+    .dining-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(201,146,42,0.2);
+      transform: translate(14px, 14px);
+      pointer-events: none;
+    }
+    .dining-text p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+      margin-top: 20px;
+    }
+    .menu-highlights {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(201,146,42,0.12);
+    }
+    .menu-item-left h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .menu-item-left p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px !important;
+      line-height: 1.5 !important;
+    }
+    .menu-item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: var(--gold-light);
+      flex-shrink: 0;
+      margin-left: 20px;
+    }
+
+    /* ─── AMENITIES STRIP ─── */
+    .amenities-strip {
+      background: var(--dark2);
+      padding: 60px;
+      border-top: 1px solid rgba(201,146,42,0.1);
+      border-bottom: 1px solid rgba(201,146,42,0.1);
+    }
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .amenity-item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .amenity-icon {
+      width: 52px; height: 52px;
+      border: 1px solid rgba(201,146,42,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .amenity-item span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--black); }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .contact-info { padding-top: 20px; }
+    .contact-info p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+      margin-bottom: 40px;
+    }
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .c-detail {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .c-icon {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,146,42,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .c-detail-text h4 {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .c-detail-text p { font-size: 13px; color: var(--white); line-height: 1.6; }
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--dark2);
+      border: 1px solid rgba(201,146,42,0.2);
+      color: var(--white);
+      padding: 14px 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-group select option { background: var(--dark2); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: rgba(201,146,42,0.6);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,146,42,0.35);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark2);
+      padding: 50px 60px 30px;
+      border-top: 1px solid rgba(201,146,42,0.15);
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(201,146,42,0.1);
+      margin-bottom: 28px;
+    }
+    .footer-logo img { height: 48px; }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-social { display: flex; gap: 16px; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,146,42,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold-light); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p { font-size: 11px; color: var(--muted); }
+    .footer-bottom span { color: var(--gold); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      section { padding: 70px 28px; }
+      nav { padding: 16px 28px; }
+      nav.scrolled { padding: 12px 28px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10,10,10,0.98);
+        z-index: 99;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+      }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a {
+        font-size: 13px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .mobile-menu a:hover { color: var(--gold-light); }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: span 1; grid-row: span 1; height: 200px; }
+      .dining-layout { grid-template-columns: 1fr; gap: 40px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 50px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { flex-direction: column; gap: 28px; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .amenities-strip { padding: 50px 28px; }
+      footer { padding: 40px 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="logo-circle.png" alt="Nilara Hills Resort" />
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#dining">Dining</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Reserve Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#rooms" onclick="toggleMenu()">Rooms</a>
+  <a href="#dining" onclick="toggleMenu()">Dining</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="#contact" class="btn-gold" onclick="toggleMenu()" style="font-size:10px;letter-spacing:2px;">Reserve Now</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Mountain Sanctuary</p>
+    <h1 class="hero-title">
+      Nilara<br>
+      <span>Hills Resort</span>
+    </h1>
+    <p class="hero-sub">Where the forest breathes &nbsp;·&nbsp; Where the silence heals</p>
+    <div class="hero-actions">
+      <a href="#rooms" class="btn-gold">Explore Rooms</a>
+      <a href="#gallery" class="btn-outline">View Gallery</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Discover</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- AMENITIES STRIP -->
+<div class="amenities-strip">
+  <div class="amenities-grid">
+    <div class="amenity-item">
+      <div class="amenity-icon">🏔️</div>
+      <span>Mountain Views</span>
+    </div>
+    <div class="amenity-item">
+      <div class="amenity-icon">🌿</div>
+      <span>Forest Trails</span>
+    </div>
+    <div class="amenity-item">
+      <div class="amenity-icon">♨️</div>
+      <span>Luxury Spa</span>
+    </div>
+    <div class="amenity-item">
+      <div class="amenity-icon">🍽️</div>
+      <span>Fine Dining</span>
+    </div>
+    <div class="amenity-item">
+      <div class="amenity-icon">🔥</div>
+      <span>Bonfire Evenings</span>
+    </div>
+    <div class="amenity-item">
+      <div class="amenity-icon">🌄</div>
+      <span>Sunrise Deck</span>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <p class="section-label">Visual Journey</p>
+    <h2 class="section-title">Life at <em>Nilara Hills</em></h2>
+    <div class="gold-divider"></div>
+    <p style="color:var(--muted);font-size:13px;max-width:500px;margin:0 auto;line-height:1.9;">Every corner of the resort tells a story of nature, luxury, and timeless serenity.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item g1">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Mountain Mist" loading="lazy"/>
+    </div>
+    <div class="g-item g2">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Luxury Room" loading="lazy"/>
+    </div>
+    <div class="g-item g3">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=700&q=80" alt="Forest Path" loading="lazy"/>
+    </div>
+    <div class="g-item g4">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Fine Dining" loading="lazy"/>
+    </div>
+    <div class="g-item g5">
+      <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=700&q=80" alt="Spa" loading="lazy"/>
+    </div>
+    <div class="g-item g6">
+      <img src="https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?w=700&q=80" alt="Sunset View" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="rooms-intro reveal">
+    <p class="section-label">Accommodations</p>
+    <h2 class="section-title">Rest Among <em>the Peaks</em></h2>
+    <div class="gold-divider"></div>
+    <p>Each room is a private retreat — crafted from natural stone and warm timber, framing panoramic views of the misty hills that surround Nilara.</p>
+  </div>
+  <div class="rooms-grid reveal">
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&q=80" alt="Forest Suite"/>
+      <div class="room-card-overlay">
+        <p class="room-tag">Most Popular</p>
+        <h3 class="room-name">Forest Suite</h3>
+        <p class="room-desc">Private balcony nestled among ancient canopy trees. Floor-to-ceiling glass walls bring the forest indoors.</p>
+        <div class="room-price"><span>₹8,500</span><span>/ night</span></div>
+        <a href="#contact" class="room-btn">Book Now</a>
+      </div>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=700&q=80" alt="Hilltop Villa"/>
+      <div class="room-card-overlay">
+        <p class="room-tag">Signature</p>
+        <h3 class="room-name">Hilltop Villa</h3>
+        <p class="room-desc">A standalone private villa with butler service, outdoor stone bath, and 270° mountain views.</p>
+        <div class="room-price"><span>₹18,000</span><span>/ night</span></div>
+        <a href="#contact" class="room-btn">Book Now</a>
+      </div>
+    </div>
+    <div class="room-card">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=80" alt="Canopy Cottage"/>
+      <div class="room-card-overlay">
+        <p class="room-tag">Cosy Escape</p>
+        <h3 class="room-name">Canopy Cottage</h3>
+        <p class="room-desc">Intimate timber cottage with a fireplace, handwoven textiles, and the sound of rain on cedar rooftops.</p>
+        <div class="room-price"><span>₹5,500</span><span>/ night</span></div>
+        <a href="#contact" class="room-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section id="dining">
+  <div class="dining-layout">
+    <div class="dining-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Nilara Dining"/>
+    </div>
+    <div class="dining-text reveal">
+      <p class="section-label">The Nilara Table</p>
+      <h2 class="section-title">Flavours of the <em>Highland</em></h2>
+      <div class="gold-divider"></div>
+      <p>Our culinary philosophy is rooted in the forest. Fresh produce from our own gardens, age-old recipes reimagined, and a setting that turns every meal into a ritual.</p>
+      <div class="menu-highlights">
+        <div class="menu-item">
+          <div class="menu-item-left">
+            <h4>Wild Mushroom Risotto</h4>
+            <p>Forest porcini, aged parmesan, truffle oil</p>
+          </div>
+          <span class="menu-item-price">₹680</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-left">
+            <h4>Smoked Lamb Chops</h4>
+            <p>Hickory smoke, mint reduction, herb crust</p>
+          </div>
+          <span class="menu-item-price">₹1,200</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-left">
+            <h4>Malabar Seafood Curry</h4>
+            <p>Coconut cream, kokum, freshwater catch</p>
+          </div>
+          <span class="menu-item-price">₹950</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-left">
+            <h4>Saffron Panna Cotta</h4>
+            <p>Cardamom brûlée, pistachio crumble</p>
+          </div>
+          <span class="menu-item-price">₹380</span>
+        </div>
+      </div>
+      <div style="margin-top:36px;">
+        <a href="#contact" class="btn-gold">Reserve a Table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info reveal">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-title">Begin Your <em>Journey</em></h2>
+      <div class="gold-divider"></div>
+      <p>Our reservations team is available to craft a bespoke stay for you. Reach us anytime — we'll respond within a few hours.</p>
+      <div class="contact-detail">
+        <div class="c-detail">
+          <div class="c-icon">📍</div>
+          <div class="c-detail-text">
+            <h4>Location</h4>
+            <p>Nilara Hills Road, Western Ghats<br>Kerala, India — 685 618</p>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">📞</div>
+          <div class="c-detail-text">
+            <h4>Phone</h4>
+            <p>+91 98765 43210</p>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">✉️</div>
+          <div class="c-detail-text">
+            <h4>Email</h4>
+            <p>reservations@nilarahills.com</p>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-icon">🕐</div>
+          <div class="c-detail-text">
+            <h4>Check-in / Check-out</h4>
+            <p>Check-in: 2:00 PM &nbsp;·&nbsp; Check-out: 11:00 AM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Your first name"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Your last name"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 00000 00000"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Check-in Date</label>
+          <input type="date"/>
+        </div>
+        <div class="form-group">
+          <label>Check-out Date</label>
+          <input type="date"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Room Type</label>
+        <select>
+          <option value="">Select a room</option>
+          <option>Forest Suite — ₹8,500/night</option>
+          <option>Hilltop Villa — ₹18,000/night</option>
+          <option>Canopy Cottage — ₹5,500/night</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Special Requests</label>
+        <textarea placeholder="Anniversary setup, dietary requirements, early check-in…"></textarea>
+      </div>
+      <button class="submit-btn">Send Reservation Request</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">
+      <img src="logo-circle.png" alt="Nilara Hills Resort"/>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#rooms">Rooms</a></li>
+      <li><a href="#dining">Dining</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-social">
+      <a href="#" class="social-link" title="Instagram">&#x1F4F7;</a>
+      <a href="#" class="social-link" title="Facebook">f</a>
+      <a href="#" class="social-link" title="WhatsApp">&#x1F4AC;</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>Nilara Hills Resort</span>. All rights reserved.</p>
+    <p>Crafted with care in the Western Ghats</p>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
